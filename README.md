@@ -1,98 +1,6 @@
-
----
-
-# Arknights Resource Evaluator
+# Arknights Resource Calculator
 
 A lightweight tool for evaluating and planning **resource consumption and efficiency** in *Arknights*, designed to help players make informed decisions about operator upgrades, materials farming, and long-term progression.
-
----
-
-## 📌 Purpose
-
-The **Arknights Resource Evaluator** aims to:
-
-* Analyze **resource requirements** for operator development
-* Compare **cost vs. benefit** across upgrades (levels, skills, promotions)
-* Assist players in **planning farming routes and priorities**
-* Reduce wasted resources by providing **clear, data-driven insights**
-
-This repository is intended for **learning, extension, and community contribution**, not for automation or gameplay manipulation.
-
----
-
-## 🧩 Core Features
-
-* **Resource Cost Calculation**
-
-  * EXP, LMD, and material requirements
-  * Promotion (E0 → E1 → E2) cost breakdowns
-  * Skill upgrade cost evaluation
-
-* **Efficiency Evaluation**
-
-  * Compare upgrade paths
-  * Highlight high-cost / low-return investments
-  * Assist in prioritizing operators and materials
-
-* **Modular Design**
-
-  * Separated logic for data, evaluation, and output
-  * Easy to extend with new operators or future content
-
-* **Readable Output**
-
-  * Clear summaries for users
-  * Structured results suitable for CLI, web, or API extension
-
----
-
-## 🚀 How to Use This Repository
-
-### 1. Clone the repository
-
-```bash
-git clone https://github.com/your-username/arknights-resource-evaluator.git
-cd arknights-resource-evaluator
-```
-
-### 2. Install dependencies
-
-(Adjust depending on language/framework)
-
-```bash
-npm install
-# or
-pip install -r requirements.txt
-```
-
-### 3. Run the evaluator
-
-```bash
-npm run evaluate
-# or
-python main.py
-```
-
-### 4. Input your goals
-
-* Select operator(s)
-* Choose target levels / promotions / skills
-* Receive a full resource breakdown and evaluation
-
----
-
-## 🏗️ Project Structure (Example)
-
-```
-arknights-resource-evaluator/
-├── data/              # Operator & material datasets
-├── evaluator/         # Core evaluation logic
-├── utils/             # Shared helper functions
-├── output/            # Generated reports (optional)
-├── tests/             # Unit tests
-├── README.md
-└── LICENSE
-```
 
 ---
 
@@ -127,10 +35,57 @@ Please submit a pull request with a clear description of changes.
 
 ---
 
-## 📜 License
+## Quick start
 
-This project is released under the **MIT License**.
-See `LICENSE` for details.
+A minimal Java backend + React (Vite) frontend to calculate pull expectations from your resources. 
 
----
+```bash
+git clone https://github.com/your-username/arknights-resource-evaluator.git
+cd arknights-resource-evaluator
+```
 
+Install deps (frontend uses pnpm; npm works too):
+```bash
+cd Arknights_Resource_Calculator
+pnpm install
+# backend has no extra install; Maven will download dependencies on first run
+```
+
+Run both (frontend + backend) from the frontend folder:
+```bash
+pnpm run dev:all
+```
+Frontend will print a local URL (e.g., http://localhost:5173/ or 5174).
+Backend listens on http://localhost:8080/calculate.
+
+Run individually:
+```bash
+# backend only
+cd Server
+mvn exec:java -Dexec.mainClass=Server.Main
+
+# frontend only
+cd Arknights_Resource_Calculator
+pnpm run dev
+```
+
+Build production frontend:
+```bash
+cd Arknights_Resource_Calculator
+pnpm run build
+```
+
+## Project layout
+```
+Server/                      # Java backend (HttpServer)
+  src/main/java/Server       # Main + Arknights calculator
+  src/test/java/Server       # JUnit tests
+Arknights_Resource_Calculator/ # React + Vite frontend
+```
+
+## Testing
+- Backend: `cd Server && mvn test`
+- Frontend: add tests under `pnpm test` 
+
+## Disclaimer
+Not affiliated with Hypergryph or Yostar. For educational/demo purposes only.
