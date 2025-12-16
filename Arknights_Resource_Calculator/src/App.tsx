@@ -14,6 +14,15 @@ export default function Calculator() {
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
 
+    const handleClear = () => {
+        setInput1("");
+        setInput2("");
+        setInput3("");
+        setInput4("");
+        setResult(null);
+        setError(null);
+    }
+    
     const handleCalculate = async () => {
         setError(null);
         setLoading(true);
@@ -106,6 +115,9 @@ export default function Calculator() {
                     <div className="flex items-center gap-3">
                         <Button onClick={handleCalculate} disabled={loading}>
                             {loading ? "Calculating..." : "Calculate the pulls"}
+                        </Button>
+                        <Button onClick={handleClear} disabled={loading}>
+                            {loading ? "Calculating..." : "Clear Inputs"}
                         </Button>
                         {loading && <span className="text-sm text-slate-500">Crunching numbers…</span>}
                     </div>
