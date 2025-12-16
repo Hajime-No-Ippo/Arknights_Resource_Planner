@@ -1,43 +1,9 @@
 # Arknights Resource Calculator
+# Arknights Resource Calculator
 
-A lightweight tool for evaluating and planning **resource consumption and efficiency** in *Arknights*, designed to help players make informed decisions about operator upgrades, materials farming, and long-term progression.
-
----
-
-## 🎯 Intended Audience
-
-* Arknights players who want **better planning tools**
-* Developers interested in **game data analysis**
-* Students practicing **clean code, data modeling, and evaluation logic**
-
----
-
-## ⚠️ Disclaimer
-
-This project:
-
-* Is **not affiliated** with Hypergryph or Yostar
-* Does **not automate gameplay**
-* Uses publicly available game data for **educational and analytical purposes only**
-
----
-
-## 🤝 Contributions
-
-Contributions are welcome!
-
-* New operators or updated data
-* Optimization logic improvements
-* UI or visualization extensions
-* Bug fixes and refactors
-
-Please submit a pull request with a clear description of changes.
-
----
+A minimal Java backend + React (Vite) frontend to calculate pull expectations from your resources. Useful as a learning/demo project rather than a full evaluator.
 
 ## Quick start
-
-A minimal Java backend + React (Vite) frontend to calculate pull expectations from your resources. 
 
 ```bash
 git clone https://github.com/your-username/arknights-resource-evaluator.git
@@ -85,7 +51,7 @@ Arknights_Resource_Calculator/ # React + Vite frontend
 
 ## Testing
 - Backend: `cd Server && mvn test`
-- Frontend: add tests under `pnpm test` 
+- Frontend: add tests under `Arknights_Resource_Calculator/test` (Jest/Vitest not yet set up by default).
 
 ## Disclaimer
 Not affiliated with Hypergryph or Yostar. For educational/demo purposes only.

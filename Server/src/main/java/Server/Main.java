@@ -10,11 +10,13 @@ import org.json.JSONObject;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        HttpServer server = HttpServer.create(new InetSocketAddress(8080), 0);
+        int port = Integer.parseInt(System.getenv().getOrDefault("PORT", "8080"));
+        HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
+
         server.createContext("/calculate", new CalculateHandler());
         server.setExecutor(null);
         server.start();
-        System.out.println("Server is running on http://localhost:8080");
+        System.out.println("Server is running on http://localhost:"+ port);
     }
 
     static class CalculateHandler implements HttpHandler {

@@ -5,6 +5,7 @@ import { Label } from "./components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./components/ui/card";
 
 export default function Calculator() {
+    const apiBase = import.meta.env.VITE_API_URL || "http://localhost:8080";
     // Use empty strings so placeholders show until the user types
     const [input1, setInput1] = useState("");
     const [input2, setInput2] = useState("");
@@ -22,13 +23,13 @@ export default function Calculator() {
         setResult(null);
         setError(null);
     }
-    
+
     const handleCalculate = async () => {
         setError(null);
         setLoading(true);
         setResult(null);
         try {
-            const response = await fetch("http://localhost:8080/calculate", {
+            const response = await fetch(`${apiBase}/calculate`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -51,8 +52,7 @@ export default function Calculator() {
         } catch (err) {
             const message = err instanceof Error ? err.message : "Unknown error";
             setError(
-                "Request failed. Make sure the backend is running on http://localhost:8080/calculate.\n" +
-                    `Details: ${message}`,
+                `Request failed. Make sure the backend is reachable at ${apiBase}/calculate.\nDetails: ${message}`,
             );
         } finally {
             setLoading(false);
