@@ -8,7 +8,7 @@ RUN mkdir -p Arknights_Resource_Calculator
 WORKDIR /app/Arknights_Resource_Calculator
 COPY Arknights_Resource_Calculator ./
 
-# Optional: set API URL at build time
+# Optional: set API URL at build time (override via build args/compose)
 ARG VITE_API_URL=http://localhost:8000
 ENV VITE_API_URL=${VITE_API_URL}
 

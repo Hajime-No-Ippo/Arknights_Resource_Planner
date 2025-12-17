@@ -5,7 +5,9 @@ import { Label } from "./components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./components/ui/card";
 
 export default function Calculator() {
-    const apiBase = import.meta.env.VITE_API_URL || "http://localhost:8080";
+    // If VITE_API_URL is set (prod), use it; otherwise use the Vite dev proxy at /api
+    const apiBase = import.meta.env.VITE_API_URL || "";
+    const apiPath = "/api/calculate";
     // Use empty strings so placeholders show until the user types
     const [input1, setInput1] = useState("");
     const [input2, setInput2] = useState("");
@@ -29,7 +31,9 @@ export default function Calculator() {
         setLoading(true);
         setResult(null);
         try {
-            const response = await fetch(`${apiBase}/calculate`, {
+            const url = apiBase ? `${apiBase}${apiPath}` : apiPath;
+            console.log("Calling backend:", url);
+            const response = await fetch(url, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -51,9 +55,8 @@ export default function Calculator() {
             setResult(data.result);
         } catch (err) {
             const message = err instanceof Error ? err.message : "Unknown error";
-            setError(
-                `Request failed. Make sure the backend is reachable at ${apiBase}/calculate.\nDetails: ${message}`,
-            );
+            const hint = apiBase ? `${apiBase}${apiPath}` : apiPath;
+            setError(`Request failed. Make sure the backend is reachable at ${hint}.\nDetails: ${message}`);
         } finally {
             setLoading(false);
         }
