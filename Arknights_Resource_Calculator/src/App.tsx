@@ -84,12 +84,12 @@ export default function Calculator() {
                             />
                         </div>
                         <div className="flex flex-col gap-2">
-                            <Label htmlFor="gems">Gacha</Label>
+                            <Label htmlFor="gems">OP(Originite Prime)</Label>
                             <Input
                                 id="gems"
                                 type="number"
                                 value={input2}
-                                placeholder="How many Gacha you have"
+                                placeholder="How many OP you have"
                                 onChange={(e) => setInput2(e.target.value)}
                             />
                         </div>
