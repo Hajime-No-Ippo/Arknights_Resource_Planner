@@ -1,4 +1,4 @@
-# Arknights Resource Calculator
+
 # Arknights Resource Calculator
 
 A minimal Java backend + React (Vite) frontend to calculate pull expectations from your resources. Useful as a learning/demo project rather than a full evaluator.
