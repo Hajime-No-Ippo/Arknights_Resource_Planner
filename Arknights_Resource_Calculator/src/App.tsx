@@ -16,6 +16,30 @@ export default function Calculator() {
     const [result, setResult] = useState<number | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
+    const [opsBroadcast, setOpsBroadcast] = useState(false);
+    const [activeView, setActiveView] = useState<"calculator" | "guides">("calculator");
+    const guideCatalogue = [
+        {
+            id: "ops-brief",
+            title: "Operations Brief",
+            description:
+                "Quick-read mission prep. Covers daily intake priorities, sanity efficiency, and banner timing snapshots.",
+        },
+        {
+            id: "materials",
+            title: "Material Routes",
+            description:
+                "Suggested farm loops for common mats with swap guidance based on event availability and drop rates.",
+        },
+        {
+            id: "pull-planning",
+            title: "Pull Planning",
+            description:
+                "Basic budget map for banner streaks. Use alongside the calculator for projection checks.",
+        },
+    ];
+    const [activeGuideId, setActiveGuideId] = useState(guideCatalogue[0].id);
+    const activeGuide = guideCatalogue.find((guide) => guide.id === activeGuideId) ?? guideCatalogue[0];
 
     const handleClear = () => {
         setInput1("");
@@ -62,77 +86,182 @@ export default function Calculator() {
         }
     };
 
+    const handleOpsToggle = () => {
+        setOpsBroadcast((prev) => !prev);
+    };
+
     return (
-        <main className="flex min-h-screen items-center justify-center px-4 py-12">
-            <Card className="w-full max-w-3xl border-slate-200/70 bg-white/90 backdrop-blur">
-                <CardHeader>
-                    <CardTitle className="text-3xl font-bold text-slate-900">Arknights Resource Calculator</CardTitle>
-                    <CardDescription className="text-base text-slate-600">
-                        Enter your resources to calculate the expected pulls.
-                    </CardDescription>
-                </CardHeader>
-                <CardContent className="flex flex-col gap-6">
-                    <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-                        <div className="flex flex-col gap-2">
-                            <Label htmlFor="Orundum">Orundum</Label>
-                            <Input
-                                id="Orundum"
-                                type="number"
-                                value={input1}
-                                placeholder="How much Orundum you have"
-                                onChange={(e) => setInput1(e.target.value)}
-                            />
-                        </div>
-                        <div className="flex flex-col gap-2">
-                            <Label htmlFor="gems">OP(Originite Prime)</Label>
-                            <Input
-                                id="gems"
-                                type="number"
-                                value={input2}
-                                placeholder="How many OP you have"
-                                onChange={(e) => setInput2(e.target.value)}
-                            />
-                        </div>
-                        <div className="flex flex-col gap-2">
-                            <Label htmlFor="ten">Ten-times Employment Tickets</Label>
-                            <Input
-                                id="ten"
-                                type="number"
-                                value={input3}
-                                placeholder="How many 10x tickets you have"
-                                onChange={(e) => setInput3(e.target.value)}
-                            />
-                        </div>
-                        <div className="flex flex-col gap-2">
-                            <Label htmlFor="single">Single Employment Tickets</Label>
-                            <Input
-                                id="single"
-                                type="number"
-                                value={input4}
-                                placeholder="How many single tickets you have"
-                                onChange={(e) => setInput4(e.target.value)}
-                            />
-                        </div>
+        <div className="ark-page">
+            <header className="ark-site-header">
+                <div className="ark-brand">
+                    <div>
+                        <p className="ark-brand-title">Rhodes Island Logistics</p>
+                        <p className="ark-brand-subtitle">Resource Intake Console</p>
                     </div>
-
-                    <div className="flex items-center gap-3">
-                        <Button onClick={handleCalculate} disabled={loading}>
-                            {loading ? "Calculating..." : "Calculate the pulls"}
-                        </Button>
-                        <Button onClick={handleClear} disabled={loading}>
-                            {loading ? "Calculating..." : "Clear Inputs"}
-                        </Button>
-                        {loading && <span className="text-sm text-slate-500">Crunching numbers…</span>}
+                </div>
+                <div className="ark-header-row">
+                    <nav className="ark-nav">
+                        <button
+                            className={`ark-nav-item ${activeView === "calculator" ? "ark-nav-item--active" : ""}`}
+                            type="button"
+                            onClick={() => setActiveView("calculator")}
+                        >
+                            Calculator
+                        </button>
+                        <button
+                            className={`ark-nav-item ${activeView === "guides" ? "ark-nav-item--active" : ""}`}
+                            type="button"
+                            onClick={() => setActiveView("guides")}
+                        >
+                            Guides
+                        </button>
+                    </nav>
+                    <div className="ark-header-actions">
+                        <button className="ark-nav-item ark-nav-item--ghost" type="button" onClick={handleOpsToggle}>
+                            {opsBroadcast ? "Disable Ops" : "Enable Ops"}
+                        </button>
+        
+                        
                     </div>
+                </div>
+            </header>
 
-                    {result !== null && (
-                        <p className="text-base font-semibold text-slate-900">
-                            Result: <span className="font-bold text-primary">{result}</span>
-                        </p>
+            <main className="ark-shell ark-main">
+                <div className="ark-card-glow w-full max-w-4xl">
+                    {activeView === "calculator" ? (
+                        <Card className="ark-card rounded-none">
+                            <CardHeader className="ark-header">
+                                <CardTitle className="ark-title">Arknights Resource Calculator</CardTitle>
+                                <CardDescription className="ark-subtitle">
+                                    Enter your resources to calculate the expected pulls.
+                                </CardDescription>
+                            </CardHeader>
+                            <CardContent className="ark-content">
+                                <div className="ark-grid">
+                                    <div className="ark-field">
+                                        <Label className="ark-label" htmlFor="Orundum">
+                                            Orundum
+                                        </Label>
+                                        <div className="ark-input-shell">
+                                            <Input
+                                                className="ark-input"
+                                                id="Orundum"
+                                                type="number"
+                                                value={input1}
+                                                placeholder="How much Orundum you have"
+                                                onChange={(e) => setInput1(e.target.value)}
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="ark-field">
+                                        <Label className="ark-label" htmlFor="gems">
+                                            OP (Originite Prime)
+                                        </Label>
+                                        <div className="ark-input-shell">
+                                            <Input
+                                                className="ark-input"
+                                                id="gems"
+                                                type="number"
+                                                value={input2}
+                                                placeholder="How many OP you have"
+                                                onChange={(e) => setInput2(e.target.value)}
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="ark-field">
+                                        <Label className="ark-label" htmlFor="ten">
+                                            Ten-times Employment Tickets
+                                        </Label>
+                                        <div className="ark-input-shell">
+                                            <Input
+                                                className="ark-input"
+                                                id="ten"
+                                                type="number"
+                                                value={input3}
+                                                placeholder="How many 10x tickets you have"
+                                                onChange={(e) => setInput3(e.target.value)}
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="ark-field">
+                                        <Label className="ark-label" htmlFor="single">
+                                            Single Employment Tickets
+                                        </Label>
+                                        <div className="ark-input-shell">
+                                            <Input
+                                                className="ark-input"
+                                                id="single"
+                                                type="number"
+                                                value={input4}
+                                                placeholder="How many single tickets you have"
+                                                onChange={(e) => setInput4(e.target.value)}
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="ark-actions">
+                                    <Button className="ark-button" onClick={handleCalculate} disabled={loading}>
+                                        {loading ? "Calculating..." : "Calculate the pulls"}
+                                    </Button>
+                                    <Button
+                                        className="ark-button ark-button--secondary"
+                                        variant="secondary"
+                                        onClick={handleClear}
+                                        disabled={loading}
+                                    >
+                                        {loading ? "Calculating..." : "Clear Inputs"}
+                                    </Button>
+                                    {loading && <span className="ark-status">Crunching numbers…</span>}
+                                </div>
+
+                                {result !== null && (
+                                    <p className="ark-result">
+                                        Result: <span className="ark-result-value">{result}</span>
+                                    </p>
+                                )}
+                                {error && <p className="ark-error">{error}</p>}
+                            </CardContent>
+                        </Card>
+                    ) : (
+                        <Card className="ark-card rounded-none">
+                            <CardHeader className="ark-header">
+                                <CardTitle className="ark-title">Guides Catalogue</CardTitle>
+                                <CardDescription className="ark-subtitle">
+                                    Select a catalogue entry to render the operator briefing.
+                                </CardDescription>
+                            </CardHeader>
+                            <CardContent className="ark-content">
+                                <div className="grid gap-6 md:grid-cols-[220px_1fr]">
+                                    <div className="flex flex-col gap-3">
+                                        {guideCatalogue.map((guide) => (
+                                            <button
+                                                key={guide.id}
+                                                className={`ark-nav-item ${
+                                                    guide.id === activeGuideId ? "ark-nav-item--active" : ""
+                                                }`}
+                                                type="button"
+                                                onClick={() => setActiveGuideId(guide.id)}
+                                            >
+                                                Catalogue {guide.title}
+                                            </button>
+                                        ))}
+                                    </div>
+                                    <div className="flex flex-col gap-4">
+                                        <p className="ark-label">User Description</p>
+                                        <p className="text-sm text-slate-300">{activeGuide.description}</p>
+                                    </div>
+                                </div>
+                            </CardContent>
+                        </Card>
                     )}
-                    {error && <p className="text-sm text-red-600">{error}</p>}
-                </CardContent>
-            </Card>
-        </main>
+                </div>
+            </main>
+
+            <footer className="ark-site-footer">
+                <p>Rhodes Island · Resource Division</p>
+                <p>All estimates are rounded. Verify with in-game totals.</p>
+            </footer>
+        </div>
     );
 }

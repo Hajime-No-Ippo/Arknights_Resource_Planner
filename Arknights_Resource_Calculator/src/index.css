@@ -1,25 +1,25 @@
-@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500&family=Rajdhani:wght@500;600;700&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --background: 210 25% 98%;
-  --foreground: 222 47% 11%;
-  --card: 0 0% 100%;
-  --card-foreground: 222 47% 11%;
-  --border: 214 32% 91%;
-  --input: 214 32% 91%;
-  --ring: 221 83% 53%;
-  --primary: 221 83% 53%;
-  --primary-foreground: 210 40% 98%;
-  --secondary: 262 83% 64%;
-  --secondary-foreground: 210 40% 98%;
-  --muted: 210 40% 96%;
-  --muted-foreground: 215 16% 47%;
-  --accent: 260 60% 80%;
-  --accent-foreground: 222 47% 11%;
+  --background: 220 12% 6%;
+  --foreground: 0 0% 92%;
+  --card: 220 10% 10%;
+  --card-foreground: 0 0% 70%;
+  --border: 220 6% 35%;
+  --input: 220 8% 12%;
+  --ring: 0 78% 56%;
+  --primary: 0 78% 56%;
+  --primary-foreground: 0 0% 98%;
+  --secondary: 0 0% 70%;
+  --secondary-foreground: 220 10% 12%;
+  --muted: 220 8% 16%;
+  --muted-foreground: 0 0% 68%;
+  --accent: 0 70% 50%;
+  --accent-foreground: 0 0% 98%;
   --destructive: 0 84% 60%;
   --destructive-foreground: 210 40% 98%;
 }
@@ -29,6 +29,460 @@
 }
 
 body {
-  @apply bg-[radial-gradient(120%_120%_at_20%_20%,#f3f6ff_0%,#d9e6ff_35%,#fdf6ff_70%,#ffffff_100%)] text-slate-900 antialiased min-h-screen m-0;
-  font-family: "DM Sans", "Inter", system-ui, -apple-system, sans-serif;
+  @apply min-h-screen m-0 antialiased text-slate-100;
+  font-family: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
+  background-color: hsl(var(--background));
+  background-image:
+    linear-gradient(180deg, hsla(0, 91%, 17%, 0.85), hsla(0, 0%, 5%, 0.95)),
+    url("/background.jpg");
+  background-size: 100% auto;
+  background-position: top;
+  background-attachment: fixed;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(90deg, hsla(0, 0%, 70%, 0.08) 1px, transparent 1px),
+    linear-gradient(0deg, hsla(0, 0%, 70%, 0.06) 1px, transparent 1px);
+  background-size: 120px 120px;
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    120deg,
+    hsla(0, 70%, 50%, 0.12) 0px,
+    hsla(0, 70%, 50%, 0.12) 12px,
+    transparent 12px,
+    transparent 28px
+  );
+  opacity: 0.15;
+  pointer-events: none;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+@layer components {
+  .ark-shell {
+    @apply flex items-center justify-center px-4 py-10;
+  }
+
+  .ark-page {
+    @apply min-h-screen flex flex-col;
+    position: relative;
+  }
+
+  .ark-page::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      hsla(0, 0%, 5%, 0.15),
+      hsla(0, 0%, 5%, 0.35)
+    );
+    mix-blend-mode: multiply;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .ark-page > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .ark-site-header {
+    @apply flex flex-col gap-4 px-6 pt-6;
+  }
+
+  .ark-site-header::after {
+    content: "";
+    height: 2px;
+    width: 100%;
+    background: linear-gradient(90deg, transparent, hsla(0, 0%, 80%, 0.8), transparent);
+    animation: ark-scan 5s linear infinite;
+    opacity: 0.8;
+  }
+
+
+  .ark-header-row {
+    @apply flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between;
+  }
+
+  .ark-brand {
+    @apply flex items-center gap-3;
+  }
+
+  .ark-brand-mark {
+    font-family: "Rajdhani", "IBM Plex Sans", system-ui, sans-serif;
+    @apply flex h-10 w-10 items-center justify-center rounded-md text-lg font-bold;
+    color: hsl(0 0% 90%);
+    border: 1px solid hsla(0, 0%, 75%, 0.7);
+    background: hsla(220, 22%, 12%, 0.9);
+    box-shadow: 0 10px 20px hsla(0, 0%, 10%, 0.35);
+  }
+
+  .ark-brand-title {
+    font-family: "Rajdhani", "IBM Plex Sans", system-ui, sans-serif;
+    @apply text-sm uppercase tracking-[0.38em] text-slate-200;
+  }
+
+  .ark-brand-subtitle {
+    @apply text-xs text-slate-400;
+  }
+
+  .ark-nav {
+    @apply flex flex-wrap gap-3;
+  }
+
+  .ark-header-actions {
+    @apply flex items-center gap-3;
+  }
+
+  .ark-nav-item {
+    font-family: "Rajdhani", "IBM Plex Sans", system-ui, sans-serif;
+    @apply relative overflow-hidden px-4 py-2 text-xs uppercase tracking-[0.26em] text-slate-200;
+    --ark-border: hsla(0, 0%, 60%, 0.5);
+    --ark-fill-start: hsla(0, 44%, 34%, 0.9);
+    --ark-fill-end: hsla(220, 10%, 10%, 0.8);
+    --ark-sheen: 0.08;
+    border: 0;
+    background:
+      linear-gradient(90deg, transparent, hsla(0, 71%, 55%, 0.9), transparent) top / 100% 3px no-repeat,
+      linear-gradient(135deg, hsla(0, 70%, 50%, 0.15), transparent 45%),
+      linear-gradient(180deg, hsla(220, 10%, 14%, 0.95), hsla(220, 10%, 8%, 0.98));
+    border-radius: 0;
+    clip-path: polygon(6% 0%, 100% 0%, 100% 84%, 94% 100%, 0% 100%, 0% 16%);
+    isolation: isolate;
+    transition: transform 200ms ease, color 200ms ease;
+    color: hsl(0 0% 10%) !important;
+  }
+
+  .ark-nav-item:hover {
+    color: hsl(0 0% 95%);
+    --ark-border: hsla(0, 0%, 85%, 0.7);
+    --ark-sheen: 0.2;
+    transform: translateY(-1px);
+  }
+
+  .ark-nav-item::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--ark-border);
+    clip-path: polygon(6% 0%, 100% 0%, 100% 84%, 94% 100%, 0% 100%, 0% 16%);
+    z-index: -1;
+  }
+
+  .ark-nav-item::after {
+    content: "";
+    position: absolute;
+    inset: 1px;
+    background:
+      linear-gradient(120deg, transparent, hsla(0, 0%, 85%, var(--ark-sheen)), transparent),
+      linear-gradient(180deg, var(--ark-fill-start), var(--ark-fill-end));
+    clip-path: polygon(6% 0%, 100% 0%, 100% 84%, 94% 100%, 0% 100%, 0% 16%);
+    z-index: -2;
+  }
+
+  .ark-nav-item:first-child {
+    color: hsl(0 0% 95%);
+    --ark-border: hsla(0, 0%, 85%, 0.8);
+    --ark-fill-start: hsla(0, 0%, 30%, 0.25);
+    --ark-fill-end: hsla(220, 10%, 10%, 0.8);
+  }
+
+  .ark-nav-item--ghost {
+    color: hsl(0 0% 10%) !important;
+    --ark-border: hsla(0, 0%, 65%, 0.5);
+    --ark-fill-start: hsla(0, 0%, 80%, 0.95);
+    --ark-fill-end: hsla(0, 0%, 68%, 0.95);
+  }
+
+  .ark-nav-item--active {
+    color: hsl(0 0% 95%);
+    --ark-border: hsla(0, 0%, 90%, 0.9);
+    --ark-fill-start: hsla(0, 0%, 32%, 0.35);
+    --ark-fill-end: hsla(220, 10%, 10%, 0.85);
+    --ark-sheen: 0.25;
+  }
+
+  .ark-main {
+    @apply flex-1;
+  }
+
+  .ark-card-glow {
+    position: relative;
+    filter:
+      drop-shadow(0 0 40px hsla(0, 98%, 37%, 0.55))
+      drop-shadow(0 0 120px hsla(0, 100%, 78%, 0.35));
+  }
+
+  .ark-card {
+    @apply w-full max-w-4xl;
+    position: relative;
+    --ark-border: hsla(0, 0%, 55%, 0.6);
+    border-radius: 0;
+    border: 0;
+    background: none;
+    background-image:
+    linear-gradient(180deg, hsla(0, 91%, 17%, 0.85), hsla(0, 0%, 5%, 0.5)),
+    url("/card.jpg");
+    box-shadow:
+      0 18px 40px hsla(220, 50%, 4%, 0.65),
+      0 0 36px hsla(0, 75%, 50%, 0.35),
+      0 0 80px hsla(0, 75%, 50%, 0.18);
+    overflow: hidden;
+    clip-path: polygon(2.5% 0%, 100% 0%, 100% 94%, 97.5% 100%, 0% 100%, 0% 6%);
+    isolation: isolate;
+  }
+
+  .ark-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--ark-border);
+    clip-path: polygon(2.5% 0%, 100% 0%, 100% 94%, 97.5% 100%, 0% 100%, 0% 6%);
+    z-index: -1;
+  }
+
+  .ark-header {
+    @apply p-6 pb-5;
+    border-bottom: 1px solid hsla(0, 0%, 45%, 0.55);
+  }
+
+  .ark-title {
+    font-family: "Rajdhani", "IBM Plex Sans", system-ui, sans-serif;
+    @apply text-3xl md:text-4xl font-semibold tracking-[0.18em] uppercase;
+    color: hsl(0 0% 92%);
+    text-shadow: 0 0 16px hsla(0, 0%, 70%, 0.35);
+  }
+
+  .ark-subtitle {
+    @apply text-sm md:text-base text-slate-300;
+    max-width: 34rem;
+  }
+
+  .ark-content {
+    @apply flex flex-col gap-7 p-6 pt-6;
+  }
+
+  .ark-grid {
+    @apply grid gap-5 md:grid-cols-2;
+  }
+
+  .ark-field {
+    @apply flex flex-col gap-2;
+  }
+
+  .ark-label {
+    font-family: "Rajdhani", "IBM Plex Sans", system-ui, sans-serif;
+    @apply text-xs uppercase tracking-[0.28em] text-slate-300;
+  }
+
+  .ark-input-shell {
+    position: relative;
+    display: flex;
+    align-items: center;
+    --ark-border: hsla(0, 0%, 65%, 0.65);
+    background: none;
+    clip-path: polygon(2.5% 0%, 100% 0%, 100% 78%, 97.5% 100%, 0% 100%, 0% 22%);
+    isolation: isolate;
+    box-shadow: 0 0 16px hsla(0, 100%, 53%, 0.18);
+  }
+
+  .ark-input-shell::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--ark-border);
+    clip-path: polygon(2.5% 0%, 100% 0%, 100% 78%, 97.5% 100%, 0% 100%, 0% 22%);
+    z-index: -1;
+  }
+
+  .ark-input-shell::after {
+    content: "";
+    position: absolute;
+    inset: 1px;
+    background:
+      linear-gradient(120deg, hsla(0, 0%, 22%, 0.2), transparent 40%),
+      linear-gradient(180deg, hsla(220, 10%, 10%, 0.95), hsla(220, 10%, 6%, 0.92));
+    clip-path: polygon(2.5% 0%, 100% 0%, 100% 78%, 97.5% 100%, 0% 100%, 0% 22%);
+    z-index: -2;
+  }
+
+  .ark-input-shell:focus-within {
+    --ark-border: hsla(0, 70%, 55%, 0.8);
+    box-shadow: 0 0 0 2px hsla(0, 70%, 55%, 0.35);
+  }
+
+  .ark-input {
+    @apply h-12 w-full text-base;
+    background-color: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    color: hsl(var(--foreground));
+    border-radius: 0;
+  }
+
+  .ark-input:focus-visible {
+    box-shadow:
+      0 0 0 2px hsla(0, 70%, 55%, 0.55),
+      0 0 18px hsla(0, 70%, 55%, 0.25);
+  }
+
+  .ark-actions {
+    @apply flex flex-wrap items-center gap-3;
+  }
+
+  .ark-signal {
+    font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    @apply flex items-center gap-2 text-xs uppercase tracking-[0.24em] text-slate-400;
+  }
+
+  .ark-signal-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: hsl(0 70% 55%);
+    box-shadow: 0 0 8px hsla(0, 70%, 55%, 0.8);
+    animation: ark-pulse 1.6s ease-in-out infinite;
+  }
+
+  .ark-ops-banner {
+    @apply text-xs uppercase tracking-[0.24em] text-slate-300;
+    position: relative;
+    --ark-border: hsla(0, 0%, 55%, 0.55);
+    padding: 10px 16px;
+    border: 0;
+    background: none;
+    clip-path: polygon(3% 0%, 100% 0%, 100% 78%, 97% 100%, 0% 100%, 0% 22%);
+    transform: translateY(-12px);
+    opacity: 0;
+    transition: transform 260ms ease, opacity 260ms ease;
+    isolation: isolate;
+  }
+
+  .ark-ops-banner::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--ark-border);
+    clip-path: polygon(3% 0%, 100% 0%, 100% 78%, 97% 100%, 0% 100%, 0% 22%);
+    z-index: -1;
+  }
+
+  .ark-ops-banner::after {
+    content: "";
+    position: absolute;
+    inset: 1px;
+    background: linear-gradient(90deg, hsla(220, 10%, 14%, 0.9), hsla(220, 10%, 10%, 0.75));
+    clip-path: polygon(3% 0%, 100% 0%, 100% 78%, 97% 100%, 0% 100%, 0% 22%);
+    z-index: -2;
+  }
+
+  .ark-button {
+    font-family: "Rajdhani", "IBM Plex Sans", system-ui, sans-serif;
+    @apply h-11 px-5 text-sm uppercase tracking-[0.2em];
+    position: relative;
+    --ark-border: hsla(0, 69%, 43%, 0.85);
+    border: 0;
+    background: none;
+    color: hsl(0, 0%, 100%);
+    box-shadow: 0 12px 24px hsla(0, 70%, 20%, 0.45);
+    border-radius: 0;
+    clip-path: polygon(4% 0%, 100% 0%, 100% 78%, 96% 100%, 0% 100%, 0% 22%);
+    isolation: isolate;
+  }
+
+  .ark-button::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--ark-border);
+    clip-path: polygon(4% 0%, 100% 0%, 100% 78%, 96% 100%, 0% 100%, 0% 22%);
+    z-index: -1;
+  }
+
+  .ark-button::after {
+    content: "";
+    position: absolute;
+    inset: 1px;
+    background: linear-gradient(120deg, hsla(0, 70%, 42%, 0.95), hsla(0, 70%, 32%, 0.95));
+    clip-path: polygon(4% 0%, 100% 0%, 100% 78%, 96% 100%, 0% 100%, 0% 22%);
+    z-index: -2;
+  }
+
+  .ark-button--secondary {
+    --ark-border: hsla(0, 0%, 65%, 0.75);
+    color: hsl(0, 0%, 92%);
+    box-shadow: 0 10px 18px hsla(0, 0%, 5%, 0.45);
+  }
+
+  .ark-button--secondary::after {
+    background: linear-gradient(180deg, hsla(0, 0%, 26%, 0.85), hsla(0, 0%, 16%, 0.9));
+  }
+
+  .ark-status {
+    font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    @apply text-xs uppercase tracking-[0.2em] text-slate-400;
+  }
+
+  .ark-result {
+    @apply text-base md:text-lg font-semibold text-slate-100;
+  }
+
+  .ark-result-value {
+    font-family: "Rajdhani", "IBM Plex Sans", system-ui, sans-serif;
+    @apply font-bold text-2xl;
+    color: hsl(0 70% 55%);
+  }
+
+  .ark-error {
+    @apply text-sm text-red-400 whitespace-pre-line;
+  }
+
+  .ark-site-footer {
+    @apply px-6 pb-8 pt-6 text-xs uppercase tracking-[0.2em] text-slate-500;
+    border-top: 1px solid hsla(0, 0%, 30%, 0.5);
+  }
+
+  .ark-site-footer p + p {
+    @apply mt-2;
+  }
+}
+
+@keyframes ark-scan {
+  0% {
+    transform: translateX(-30%);
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateX(30%);
+    opacity: 0.25;
+  }
+}
+
+@keyframes ark-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.35);
+    opacity: 1;
+  }
 }
