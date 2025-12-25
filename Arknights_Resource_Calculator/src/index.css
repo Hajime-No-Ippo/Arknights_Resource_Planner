@@ -461,6 +461,59 @@ body::after {
   }
 }
 
+@media (max-width: 640px) {
+  body {
+    background-attachment: scroll;
+    background-size: 200% auto;
+  }
+
+  .ark-shell {
+    @apply px-3 py-8;
+  }
+
+  .ark-site-header {
+    @apply px-4 pt-5;
+  }
+
+  .ark-title {
+    @apply text-2xl;
+    letter-spacing: 0.12em;
+  }
+
+  .ark-subtitle {
+    @apply text-sm;
+  }
+
+  .ark-content {
+    @apply gap-5 p-4 pt-5;
+  }
+
+  .ark-grid {
+    @apply grid-cols-1 gap-4;
+  }
+
+  .ark-actions {
+    @apply flex-col items-stretch;
+  }
+
+  .ark-actions .ark-button {
+    @apply w-full justify-center;
+  }
+
+  .ark-nav {
+    @apply gap-2;
+  }
+
+  .ark-nav-item {
+    @apply px-3 py-2 text-[0.6rem];
+    letter-spacing: 0.2em;
+  }
+
+  .ark-site-footer {
+    @apply px-4;
+  }
+}
+
 @keyframes ark-scan {
   0% {
     transform: translateX(-30%);
