@@ -22,20 +22,12 @@ export default function Calculator() {
         {
             id: "ops-brief",
             title: "Operations Brief",
-            description:
-                "Quick-read mission prep. Covers daily intake priorities, sanity efficiency, and banner timing snapshots.",
+            description: "Quick start notes for daily resource planning and banner budgeting.",
         },
         {
-            id: "materials",
-            title: "Material Routes",
-            description:
-                "Suggested farm loops for common mats with swap guidance based on event availability and drop rates.",
-        },
-        {
-            id: "pull-planning",
-            title: "Pull Planning",
-            description:
-                "Basic budget map for banner streaks. Use alongside the calculator for projection checks.",
+            id: "supply-check",
+            title: "Supply Check",
+            description: "Review your stockpiles and convert them into expected pull counts.",
         },
     ];
     const [activeGuideId, setActiveGuideId] = useState(guideCatalogue[0].id);
@@ -55,20 +47,29 @@ export default function Calculator() {
         setLoading(true);
         setResult(null);
         try {
-            const url = apiBase ? `${apiBase}${apiPath}` : apiPath;
-            console.log("Calling backend:", url);
-            const response = await fetch(url, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    input1: Number(input1) || 0,
-                    input2: Number(input2) || 0,
-                    input3: Number(input3) || 0,
-                    input4: Number(input4) || 0,
-                }),
+            const params = new URLSearchParams({
+                input1: String(Number(input1) || 0),
+                input2: String(Number(input2) || 0),
+                input3: String(Number(input3) || 0),
+                input4: String(Number(input4) || 0),
             });
+
+            const url = apiBase ? `${apiBase}${apiPath}?${params}` : `${apiPath}?${params}`;
+
+            console.log("Calling backend:", url);
+            const response = await fetch(url);
+            // const response = await fetch(url, {
+            //     method: "POST",
+            //     headers: {
+            //         "Content-Type": "application/json",
+            //     },
+            //     body: JSON.stringify({
+            //         input1: Number(input1) || 0,
+            //         input2: Number(input2) || 0,
+            //         input3: Number(input3) || 0,
+            //         input4: Number(input4) || 0,
+            //     }),
+            // });
 
             if (!response.ok) {
                 const text = await response.text();

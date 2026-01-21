@@ -40,27 +40,25 @@ public class Main {
                 return;
             }
 
-                    String requestBody = new String(exchange.getRequestBody().readAllBytes());
-                    System.out.println("Request body: " + requestBody);
+                String requestBody = new String(exchange.getRequestBody().readAllBytes());
+                System.out.println("Request body: " + requestBody);
 
-                    JSONObject input = new JSONObject(requestBody);
+                JSONObject input = new JSONObject(requestBody);
 
-                    int input1 = input.optInt("input1");
-                    int input2 = input.optInt("input2");
-                    int input3 = input.optInt("input3");
-                    int input4 = input.optInt("input4");
+                int input1 = input.optInt("input1");
+                int input2 = input.optInt("input2");
+                int input3 = input.optInt("input3");
+                int input4 = input.optInt("input4");
 
-                    int result = Arknights.calculate(input1, input2, input3, input4);
-
-                    JSONObject response = new JSONObject();
-                    response.put("result", result);
-                    byte[] bytes = response.toString().getBytes();
-
-                    exchange.getResponseHeaders().set("Content-Type", "application/json");
-                    exchange.sendResponseHeaders(200, bytes.length);
-                    try (OutputStream os = exchange.getResponseBody()) {
-                        os.write(bytes);
-                    }
+                int result = Arknights.calculate(input1, input2, input3, input4);
+                JSONObject response = new JSONObject();
+                response.put("result", result);
+                byte[] bytes = response.toString().getBytes();
+                exchange.getResponseHeaders().set("Content-Type", "application/json");
+                exchange.sendResponseHeaders(200, bytes.length);
+                try (OutputStream os = exchange.getResponseBody()) {
+                    os.write(bytes);
+                }
                     
                 } catch (Exception e) {
                     e.printStackTrace();
