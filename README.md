@@ -1,7 +1,13 @@
 
 # Arknights Resource Calculator
 
-A minimal Java backend + React (Vite) frontend to calculate pull expectations from your resources. Useful as a learning/demo project rather than a full evaluator.
+A minimal Java maven backend + React (Vite) frontend to calculate pull expectations from your resources. This project aim to help players to calculate their resouces to enhance their game experience.
+
+[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/erictao)
+
+### Main Page
+![alt text](/readmepic/image.png)
+The main page can intake 4 inputs, this was mapping to the 4 types of game resources in Arknights.
 
 ## Quick start
 
@@ -51,7 +57,10 @@ Arknights_Resource_Calculator/ # React + Vite frontend
 
 ## Testing
 - Backend: `cd Server && mvn test`
-- Frontend: add tests under `Arknights_Resource_Calculator/test` (Jest/Vitest not yet set up by default).
+- Frontend: add tests under `Arknights_Resource_Calculator/test` 
 
 ## Disclaimer
-Not affiliated with Hypergryph or Yostar. For educational/demo purposes only.
+This Project is NOT affiliated with Hypergryph or Yostar, it is open resouce and welcome to any contrbutions.
+
+## New Patch
+Enhance the OCR methods, reduce preflight from service dom to frontend, enabled simple signals, for better user experience.
