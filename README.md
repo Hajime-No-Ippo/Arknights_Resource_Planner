@@ -63,4 +63,4 @@ Arknights_Resource_Calculator/ # React + Vite frontend
 This Project is NOT affiliated with Hypergryph or Yostar, it is open resouce and welcome to any contrbutions.
 
 ## New Patch
-Enhance the OCR methods, reduce preflight from service dom to frontend, enabled simple signals, for better user experience.
+Enhance the COR methods, reduce preflight from service dom to frontend, enabled simple signals, for better user experience.
